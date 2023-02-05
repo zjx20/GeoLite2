@@ -33,13 +33,16 @@ jobs:
       run: |
         cp -v GeoLite*/*.csv upload
         echo "TAG_NAME=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
+    - name: Compress Files
+      run: |
+        gzip -9 *.mmdb *.csv
     # - name: Push to "download" branch
     #   run: |
     #     cd upload
     #     git init
     #     git config user.name "${{ github.actor }}"
     #     git config user.email "${{ github.actor }}@users.noreply.github.com"
-    #     git lfs track "*.mmdb" "*.csv"
+    #     git lfs track "*.mmdb.gz" "*.csv.gz"
     #     git add .gitattributes
     #     git checkout -b download
     #     git add .
@@ -54,10 +57,10 @@ jobs:
         tag_name: ${{ env.TAG_NAME }}
         body: ${{ env.TAG_NAME }}
         files: |
-          upload/*.mmdb
-          upload/GeoLite2-ASN*.csv
-          upload/GeoLite2-Country*.csv
-          upload/GeoLite2-City*.csv
+          upload/*.mmdb.gz
+          upload/GeoLite2-ASN*.csv.gz
+          upload/GeoLite2-Country*.csv.gz
+          upload/GeoLite2-City*.csv.gz
 
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@v0.2.0
