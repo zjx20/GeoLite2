@@ -35,7 +35,7 @@ jobs:
         echo "TAG_NAME=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
     - name: Compress Files
       run: |
-        gzip -9 *.mmdb *.csv
+        gzip -9 upload/*.mmdb upload/*.csv
     # - name: Push to "download" branch
     #   run: |
     #     cd upload
